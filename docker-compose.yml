@@ -1,0 +1,12 @@
+services:
+  bot:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DATA_DIR: /data
+      # Must be the same absolute host directory mounted below.
+      SANDBOX_HOST_DATA_DIR: ${HOST_DATA_DIR:?Set HOST_DATA_DIR to an absolute path in .env}
+    volumes:
+      - ${HOST_DATA_DIR:?Set HOST_DATA_DIR to an absolute path in .env}:/data
+      - /var/run/docker.sock:/var/run/docker.sock
